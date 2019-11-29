@@ -23,8 +23,7 @@ def csv_update(resp_obj):
             "age": 29
         }
         writer.writerow(temp)
-
-
+        
 data_location = 'data/responses.csv'
 data = pd.read_csv(data_location)
 
@@ -75,10 +74,30 @@ def index():
         resp = request.json
         # csv_update(resp)
         res = get_recommendations(resp['name'], cosine_sim2)
-        print(res)
-        res = res.values.tolist()
+        ####
+        t=np.array(res)
+
+        import array
+
+        finalans=[]
+
+        t=t[:3]
+        print('t')
+        print(t)
+        for i in t:
+    
+            temp=[]
+            for j in data.columns:
+                if data[j][i] == 5 :
+                   temp.append(j); 
+  
+   
+            finalans.append({"index":i,"qualities":temp}) 
+
+        
+       ### res = res.values.tolist()
         response = jsonify({
-            "result": res
+            "result": finalans
         })
         return response
     else:
