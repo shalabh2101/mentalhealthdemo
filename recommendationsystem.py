@@ -156,7 +156,7 @@ def treeClassifier(c):
 ##Prediction model alpha values aka coefficients are remaining
 
 @app.route('/health', methods=['GET','POST'])
-def index():
+def index2():
     if request.method == 'POST':
         resp = request.json
         # csv_update(resp)
