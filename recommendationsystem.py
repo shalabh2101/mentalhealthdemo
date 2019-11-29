@@ -102,7 +102,7 @@ def index():
         # response = jsonify({
         #     "result": finalans
         # })
-        return json.dumps(finalans,encoding='UTF-8')
+        return json.dumps(finalans)
     else:
         return "get method!!!"
 
