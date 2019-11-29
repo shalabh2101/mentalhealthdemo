@@ -69,6 +69,8 @@ def get_recommendations(title, cosine_sim):
 data = data.reset_index()
 indices = pd.Series(data.index, index=data['title'])
 
+import json
+
 @app.route('/', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
@@ -79,7 +81,7 @@ def index():
         t=np.array(res)
 
         import array
-
+        
         finalans=[]
 
         t=t[:3]
