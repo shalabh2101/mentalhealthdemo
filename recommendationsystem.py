@@ -92,7 +92,7 @@ def index():
             temp=[]
             for j in data.columns:
                 if data[j][i] == 5 :
-                   temp.append(j); 
+                   temp.append(j) 
   
    
             finalans.append({"index":i,"qualities":temp}) 
