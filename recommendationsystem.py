@@ -164,9 +164,9 @@ def index2():
         res = treeClassifier(test_data)
         #print(res)
         #res = res.values.tolist()
-        response = jsonify({
-            "result": res[0]
-        })
+        # response = jsonify({
+        #     "result": res[0]
+        # })
         return response
     else:
         return "get method!!!"
