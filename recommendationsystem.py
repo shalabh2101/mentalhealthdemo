@@ -97,7 +97,7 @@ def index():
    
             finalans.append({"index":i,"qualities":temp}) 
 
-        res=finalans.tolist()
+        res=finalans.to_dict()
         print(res)
        ### res = res.values.tolist()
         # response = jsonify({
