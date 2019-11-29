@@ -165,7 +165,7 @@ def index2():
         #print(res)
         #res = res.values.tolist()
         response = jsonify({
-            "result": res
+            "result": res[0]
         })
         return response
     else:
