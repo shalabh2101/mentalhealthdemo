@@ -163,7 +163,7 @@ def index2():
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
         res = treeClassifier(test_data)
         print(res)
-       # res = res.values.tolist()
+        res = res.values.tolist()
         response = jsonify({
             "result": res
         })
