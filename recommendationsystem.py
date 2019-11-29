@@ -99,9 +99,9 @@ def index():
 
         
        ### res = res.values.tolist()
-        response = jsonify({
-            "result": finalans
-        })
+        # response = jsonify({
+        #     "result": finalans
+        # })
         return json.dumps(finalans,encoding='UTF-8')
     else:
         return "get method!!!"
