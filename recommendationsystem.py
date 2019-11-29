@@ -162,12 +162,14 @@ def index2():
         # csv_update(resp)
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
         res = treeClassifier(test_data)
-        #print(res)
+        print(res)
+        print(res.values)
+        print(res.tostring())       
         #res = res.values.tolist()
         # response = jsonify({
         #     "result": res[0]
         # })
-        return res
+        return res.tostring()
     else:
         return "get method!!!"
 
