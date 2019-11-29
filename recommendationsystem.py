@@ -43,7 +43,8 @@ data = encoding(data)
 for i in range(data.shape[0]):
     data['title']=i
 for i in range(data.shape[0]):
-    data['title'][i]=str(i)+random.choice(string.ascii_letters)    
+    data['title'][i]=str(i)
+    #+random.choice(string.ascii_letters)    
 
 indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 
