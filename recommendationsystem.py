@@ -95,8 +95,8 @@ def index():
   
    
             finalans.append({"index":i,"qualities":temp}) 
-
-        res= json.dumps(finalans.tolist())
+        
+        res= json.dumps(np.asscalar(finalans))
         print(res)
        ### res = res.values.tolist()
         # response = jsonify({
