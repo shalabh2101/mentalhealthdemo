@@ -96,7 +96,7 @@ def index():
    
             finalans.append({"index":i,"qualities":temp}) 
 
-        res= json.dumps(finalans)
+        res= json.dumps(finalans.tolist())
         print(res)
        ### res = res.values.tolist()
         # response = jsonify({
