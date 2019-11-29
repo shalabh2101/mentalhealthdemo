@@ -148,7 +148,7 @@ def treeClassifier(c):
     c=np.array(c).reshape(-1, 8)
  
     y_pred_class = tree.predict(c)
-    print('y_pred_class')
+    #print('y_pred_class')
     return (y_pred_class)
 
 ##all has been from Machine Learning for Mental Health
@@ -162,8 +162,8 @@ def index2():
         # csv_update(resp)
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
         res = treeClassifier(test_data)
-        print(res)
-        res = res.values.tolist()
+        #print(res)
+        #res = res.values.tolist()
         response = jsonify({
             "result": res
         })
