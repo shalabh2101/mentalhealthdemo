@@ -97,12 +97,13 @@ def index():
    
             finalans.append({"index":i,"qualities":temp}) 
 
-        
+        res=finalans.tolist()
+        print(res)
        ### res = res.values.tolist()
         # response = jsonify({
         #     "result": finalans
         # })
-        return json.dumps(finalans)
+        return res
     else:
         return "get method!!!"
 
