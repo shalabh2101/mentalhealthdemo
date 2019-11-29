@@ -163,13 +163,15 @@ def index2():
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
         res = treeClassifier(test_data)
         print(res)
-        print(res.tostring())  
         print(res[0].tostring())       
-        #res = res.values.tolist()
-        # response = jsonify({
-        #     "result": res[0]
-        # })
-        return res[0]
+        if res[0] == 1 :
+           ans="Yes"
+        else:
+           ans="No" 
+        response = jsonify({
+            "result": ans
+        })
+        return response
     else:
         return "get method!!!"
 
