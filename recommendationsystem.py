@@ -167,7 +167,7 @@ def index2():
         # response = jsonify({
         #     "result": res[0]
         # })
-        return response
+        return res
     else:
         return "get method!!!"
 
