@@ -100,7 +100,7 @@ def index():
         response = jsonify({
             "result": finalans
         })
-        return response
+        return finalans
     else:
         return "get method!!!"
 
