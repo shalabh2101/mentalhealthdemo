@@ -85,8 +85,7 @@ def index():
         finalans=[]
 
         t=t[:3]
-        print('t')
-        print(t)
+        
         for i in t:
     
             temp=[]
@@ -97,7 +96,7 @@ def index():
    
             finalans.append({"index":i,"qualities":temp}) 
 
-        res=finalans.to_dict()
+        res= json.dumps(finalans)
         print(res)
        ### res = res.values.tolist()
         # response = jsonify({
