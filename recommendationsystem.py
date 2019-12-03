@@ -70,39 +70,27 @@ data = data.reset_index()
 indices = pd.Series(data.index, index=data['title'])
 
 import json
-
 @app.route('/', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
         resp = request.json
         # csv_update(resp)
+        res_list = []
         res = get_recommendations(resp['name'], cosine_sim2)
-        ####
-        t=np.array(res)
-
-        import array
-        
-        finalans=[]
-
-        t=t[:3]
-        
-        for i in t:
-    
-            temp=[]
+        res = res.to_list()[:3]
+        for index, i in enumerate(res):
+            temp_list = []
             for j in data.columns:
-                if data[j][i] == 5 :
-                   temp.append(j) 
-  
-   
-            finalans.append({"index":i,"qualities":temp}) 
-        print(finalans)
-        # res= json.dumps(np.asscalar(finalans))
-        print(res)
-       ### res = res.values.tolist()
-        # response = jsonify({
-        #     "result": finalans
-        # })
-        return finalans
+                if data[j][i] == 5:
+                    temp_list.append(j)
+            temp_dict = {}
+            temp_dict['index'] = index+1
+            temp_dict['id'] = i
+            temp_dict['features'] = temp_list
+            res_list.append(temp_dict)
+        return jsonify({
+            "result": res_list
+        })
     else:
         return "get method!!!"
 
