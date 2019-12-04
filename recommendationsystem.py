@@ -11,7 +11,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, request, jsonify
 import csv
 
-
 def csv_update(resp_obj):
     with open('data/responses.csv', mode='a') as csv_file:
         fieldnames = ['name', 'lastName', 'Date', 'age']
@@ -28,6 +27,9 @@ data_location = 'data/responses.csv'
 data = pd.read_csv(data_location)
 
 app = Flask(__name__)
+
+
+
 
 def encoding(data):
     df = copy.deepcopy(data)
@@ -117,27 +119,56 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
 
 
-
 #age_df = pd.read_csv('./Data/mental-heath-in-tech-2016_20161114.csv')
-
 train_df = pd.read_csv('./data/processed.csv')
-
 # define X and y
-feature_cols = ['What is your age?', 'What is your gender?', 'Do you have a family history of mental illness?',
-                'Does your employer provide mental health benefits as part of healthcare coverage?',
-                'Do you know the options for mental health care available under your employer-provided coverage?',
-                'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?', 
-                'If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:',
-                'Do you believe your productivity is ever affected by a mental health issue?']
-X = train_df[feature_cols]
-y = train_df['Have you ever sought treatment for a mental health issue from a mental health professional?']
+
+#old
+# feature_cols = ['What is your age?', 'What is your gender?', 'Do you have a family history of mental illness?',
+#                 'Does your employer provide mental health benefits as part of healthcare coverage?',
+#                 'Do you know the options for mental health care available under your employer-provided coverage?',
+#                 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?', 
+#                 'If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:',
+#                 'Do you believe your productivity is ever affected by a mental health issue?']
+
+
+feature_cols = [ 'What is your age?','What is your gender?',
+                 'Do you have a family history of mental illness?',
+                 'Have you had a mental health disorder in the past?',
+                 'Do you believe your productivity is ever affected by a mental health issue?',
+                 'If yes, what percentage of your work time (time performing primary or secondary job functions) is affected by a mental health issue?',
+                 'If you have a mental health issue, do you feel that it interferes with your work when being treated effectively?',
+                 'If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?'
+                ]
+
+X1 = train_df[feature_cols]
+y1= train_df['Have you ever sought treatment for a mental health issue from a mental health professional?']
+
+feature_cols_2 =[ 'What is your age?',
+                 'What is your gender?', 
+                 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?',
+                 'If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:',
+                 'Would you feel comfortable discussing a mental health disorder with your coworkers?',
+                 'Would you feel comfortable discussing a mental health disorder with your direct supervisor(s)?',
+                 'Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?',
+                 'Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?',
+                 'Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?',
+                 'Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?',
+           
+              ]
+X2 = train_df[feature_cols]
+y2 = train_df['Do you think that discussing a mental health disorder with your employer would have negative consequences?']
 
 # split X and y into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
 
 
-def treeClassifier(c):
+def treeClassifier(c,X,Y):
     # Calculating the best parameters
+    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.30, random_state=0)
+
+   
+
     tree = DecisionTreeClassifier()
     featuresSize = feature_cols.__len__()
     param_dist = {"max_depth": [3, None],
@@ -165,26 +196,58 @@ def treeClassifier(c):
 ##Nueral Network Remaining
 ##Prediction model alpha values aka coefficients are remaining
 
+# @app.route('/health', methods=['GET','POST'])
+# def index2():
+#     if request.method == 'POST':
+#         resp = request.json
+#         # csv_update(resp)
+#         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
+#         res = treeClassifier(test_data)
+#         print(res)
+#         print(res[0].tostring())       
+#         if res[0] == 1 :
+#            ans="Yes"
+#         else:
+#            ans="No" 
+#         response = jsonify({
+#             "result": ans
+#         })
+#         return response
+#     else:
+#         return "get method!!!"
+
 @app.route('/health', methods=['GET','POST'])
 def index2():
     if request.method == 'POST':
         resp = request.json
         # csv_update(resp)
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
-        res = treeClassifier(test_data)
-        print(res)
+        res_treatment = treeClassifier(test_data,X1,y1)
+
+        test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15',res['16']]]
+        res_consequence = treeClassifier(test_data,X2,y2)
+        
+        print(res1)
+        print(res2)
+
         print(res[0].tostring())       
-        if res[0] == 1 :
-           ans="Yes"
+        if res_treatment[0] == 1 :
+           ans1="Yes"
         else:
-           ans="No" 
+           ans1="No" 
+
+        if res_consequence[0] == 1 :
+           ans2="Yes"
+        else:
+           ans2="No"    
+
         response = jsonify({
-            "result": ans
+            "treatment": ans1,
+            "fear"     : ans2
         })
         return response
     else:
-        return "get method!!!"
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', debug=True)
+   app.run(host='0.0.0.0', debug=True)
