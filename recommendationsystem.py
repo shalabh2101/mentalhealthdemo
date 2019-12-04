@@ -64,7 +64,7 @@ moviesmusic=data[['Folk','Classical music','Pop','Metal or Hardrock','Opera','Do
 hobbiesinterest=data[['History','Politics','Science and technology','Writing','Dancing','Foreign languages','Religion',
                         'Countryside, outdoors','Pets','Cars']]
     
-traits=data[['Prioritising workload','Writing notes','Fear of public speaking','Funniness','Mood swings','Getting angry','Charity','Assertiveness','Loneliness'
+traits=data[['Prioritising workload','Writing notes','Fear of public speaking','Funniness','Mood swings','Getting angry','Charity','Assertiveness','Loneliness',
                'Appearence and gestures' ]]
 
 
