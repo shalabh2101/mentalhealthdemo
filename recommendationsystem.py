@@ -1,11 +1,11 @@
 import pandas as pd
-import numpy as np 
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 import seaborn as sns
 import random
 import string
-import copy  
+import copy
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, request, jsonify
@@ -22,7 +22,7 @@ def csv_update(resp_obj):
             "age": 29
         }
         writer.writerow(temp)
-        
+
 data_location = 'data/responses.csv'
 data = pd.read_csv(data_location)
 
@@ -46,7 +46,7 @@ for i in range(data.shape[0]):
     data['title']=i
 for i in range(data.shape[0]):
     data['title'][i]=str(i)
-    #+random.choice(string.ascii_letters)    
+    #+random.choice(string.ascii_letters)
 
 indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 
@@ -127,7 +127,7 @@ train_df = pd.read_csv('./data/processed.csv')
 # feature_cols = ['What is your age?', 'What is your gender?', 'Do you have a family history of mental illness?',
 #                 'Does your employer provide mental health benefits as part of healthcare coverage?',
 #                 'Do you know the options for mental health care available under your employer-provided coverage?',
-#                 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?', 
+#                 'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?',
 #                 'If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:',
 #                 'Do you believe your productivity is ever affected by a mental health issue?']
 
@@ -145,7 +145,7 @@ X1 = train_df[feature_cols]
 y1= train_df['Have you ever sought treatment for a mental health issue from a mental health professional?']
 
 feature_cols_2 =[ 'What is your age?',
-                 'What is your gender?', 
+                 'What is your gender?',
                  'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?',
                  'If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:',
                  'Would you feel comfortable discussing a mental health disorder with your coworkers?',
@@ -154,7 +154,7 @@ feature_cols_2 =[ 'What is your age?',
                  'Do you think that team members/co-workers would view you more negatively if they knew you suffered from a mental health issue?',
                  'Have you observed or experienced an unsupportive or badly handled response to a mental health issue in your current or previous workplace?',
                  'Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?',
-           
+
               ]
 X2 = train_df[feature_cols]
 y2 = train_df['Do you think that discussing a mental health disorder with your employer would have negative consequences?']
@@ -167,7 +167,7 @@ def treeClassifier(c,X,Y):
     # Calculating the best parameters
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.30, random_state=0)
 
-   
+
 
     tree = DecisionTreeClassifier()
     featuresSize = feature_cols.__len__()
@@ -177,17 +177,17 @@ def treeClassifier(c,X,Y):
               "min_samples_leaf": randint(1, 9),
               "criterion": ["gini", "entropy"]}
     #tuningRandomizedSearchCV(tree, param_dist)
-    
+
     # train a decision tree model on the training set
     tree = DecisionTreeClassifier(max_depth=3, min_samples_split=8, max_features=6, criterion='entropy', min_samples_leaf=7)
     tree.fit(X_train, y_train)
-    
+
     # make class predictions for the testing set
    # y_pred_class = tree.predict(X_test)
 
-   
+
     c=np.array(c).reshape(-1, 8)
- 
+
     y_pred_class = tree.predict(c)
     #print('y_pred_class')
     return (y_pred_class)
@@ -204,11 +204,11 @@ def treeClassifier(c,X,Y):
 #         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
 #         res = treeClassifier(test_data)
 #         print(res)
-#         print(res[0].tostring())       
+#         print(res[0].tostring())
 #         if res[0] == 1 :
 #            ans="Yes"
 #         else:
-#            ans="No" 
+#            ans="No"
 #         response = jsonify({
 #             "result": ans
 #         })
@@ -224,22 +224,22 @@ def index2():
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
         res_treatment = treeClassifier(test_data,X1,y1)
 
-        test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15',res['16']]]
+        test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15',resp['16']]]
         res_consequence = treeClassifier(test_data,X2,y2)
-        
-        print(res1)
-        print(res2)
 
-        print(res[0].tostring())       
+        print(res_treatment)
+        print(res_consequence)
+
+        print(res_treatment[0].tostring())
         if res_treatment[0] == 1 :
            ans1="Yes"
         else:
-           ans1="No" 
+           ans1="No"
 
         if res_consequence[0] == 1 :
            ans2="Yes"
         else:
-           ans2="No"    
+           ans2="No"
 
         response = jsonify({
             "treatment": ans1,
@@ -247,7 +247,9 @@ def index2():
         })
         return response
     else:
+        return "not expected input"
 
+if __name__== "__main__" :
+   app.run(host='0.0.0.0',port=80,debug=True)
+                           
 
- if __name__ == "__main__" :
-    app.run(host='0.0.0.0',port=80, debug=True)
