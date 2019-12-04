@@ -285,11 +285,14 @@ def index2():
     if request.method == 'POST':
         resp = request.json
         # csv_update(resp)
-        test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
+        # test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
+        test_data=[resp['age'],resp['gender'],resp['fmly_hist'],resp['past_mental'],resp['prdty_affect'],resp['percent_time'],resp['wrk_interfer'],resp['wrk_not_interfer']]
         res_treatment = treeClassifier(test_data,X1,y1)
 
-        test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15'],resp['16']]
+        # test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15'],resp['16']]
+        test_data_2=[resp['age'],resp['gender'],resp['anonymity'],resp['medical_leave'],resp['diss_pblm_coworker'],resp['diss_pblm_super'],resp['diss_result'],resp['health_view'],resp['health_handle'],resp['coworker_diss']]
         res_consequence = treeClassifier2(test_data_2,X2,y2)
+
 
         print(res_treatment)
         print(res_consequence)
