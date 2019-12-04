@@ -163,7 +163,7 @@ y2 = train_df['Do you think that discussing a mental health disorder with your e
 #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
 
 
-def treeClassifier(c,X,Y):
+def treeClassifier(c,X,Y,len):
     # Calculating the best parameters
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.30, random_state=0)
 
@@ -176,7 +176,23 @@ def treeClassifier(c,X,Y):
               "min_samples_split": randint(2, 9),
               "min_samples_leaf": randint(1, 9),
               "criterion": ["gini", "entropy"]}
+
+    forest = RandomForestClassifier(n_estimators = 20)
+
+    featuresSize = feature_cols.__len__()
+    param_dist = {"max_depth": [3, None],
+              "max_features": randint(1, featuresSize),
+              "min_samples_split": randint(2, 9),
+              "min_samples_leaf": randint(1, 9),
+              "criterion": ["gini", "entropy"]}
+    #tuningRandomizedSearchCV(forest, param_dist)          
     #tuningRandomizedSearchCV(tree, param_dist)
+
+    forest = RandomForestClassifier(max_depth = None, min_samples_leaf=8, min_samples_split=2, n_estimators = 20, random_state = 1)
+    my_forest = forest.fit(X_train, y_train)
+    
+    # make class predictions for the testing set
+    
 
     # train a decision tree model on the training set
     tree = DecisionTreeClassifier(max_depth=3, min_samples_split=8, max_features=6, criterion='entropy', min_samples_leaf=7)
@@ -186,9 +202,10 @@ def treeClassifier(c,X,Y):
    # y_pred_class = tree.predict(X_test)
 
 
-    c=np.array(c).reshape(-1, 8)
+    c=np.array(c).reshape(-1, len)
 
-    y_pred_class = tree.predict(c)
+    #y_pred_class = tree.predict(c)
+    y_pred_class = my_forest.predict(c)
     #print('y_pred_class')
     return (y_pred_class)
 
@@ -222,10 +239,10 @@ def index2():
         resp = request.json
         # csv_update(resp)
         test_data=[resp['1'],resp['2'],resp['3'],resp['4'],resp['5'],resp['6'],resp['7'],resp['8']]
-        res_treatment = treeClassifier(test_data,X1,y1)
+        res_treatment = treeClassifier(test_data,X1,y1,8)
 
-        test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15',resp['16']]]
-        res_consequence = treeClassifier(test_data,X2,y2)
+        test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15'],resp['16']]
+        res_consequence = treeClassifier(test_data,X2,y2,10)
 
         print(res_treatment)
         print(res_consequence)
