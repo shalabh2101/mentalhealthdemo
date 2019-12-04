@@ -126,11 +126,11 @@ def index():
             temp3 = sorted(user_row, key=user_row.get)[-3:]
             temp6['moviesmusic'] = temp3
 
-            hobbies_row = moviesmusic.iloc[resp['name']].to_dict()
+            hobbies_row = hobbiesinterest.iloc[resp['name']].to_dict()
             temp4 = sorted(hobbies_row, key=hobbies_row.get)[-3:]
             temp6['hobbiesinterest'] = temp4
 
-            t_row = moviesmusic.iloc[resp['name']].to_dict()
+            t_row = traits.iloc[resp['name']].to_dict()
             temp5 = sorted(t_row, key=t_row.get)[-3:]
             temp6['traits'] = temp5
             
@@ -139,7 +139,7 @@ def index():
             return jsonify({
                 "result": res_list
             })
-            
+
         except:
             return jsonify({
                 "result": "Data Frame is Null. Try with another value."
