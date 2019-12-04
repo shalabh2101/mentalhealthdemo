@@ -179,7 +179,7 @@ def treeClassifier(c,X,Y,length):
 
     forest = RandomForestClassifier(n_estimators = 20)
 
-    featuresSize = feature_cols.__len__()
+    #featuresSize = feature_cols.__len__()
     param_dist = {"max_depth": [3, None],
               "max_features": randint(1, featuresSize),
               "min_samples_split": randint(2, 9),
