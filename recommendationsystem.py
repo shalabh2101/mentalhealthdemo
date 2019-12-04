@@ -156,7 +156,7 @@ feature_cols_2 =[ 'What is your age?',
                  'Have your observations of how another individual who discussed a mental health disorder made you less likely to reveal a mental health issue yourself in your current workplace?',
 
               ]
-X2 = train_df[feature_cols]
+X2 = train_df[feature_cols_2]
 y2 = train_df['Do you think that discussing a mental health disorder with your employer would have negative consequences?']
 
 # split X and y into training and testing sets
@@ -218,13 +218,13 @@ def treeClassifier2(c,X,Y):
 
     tree = DecisionTreeClassifier()
     featuresSize = 10
-    param_dist = {"max_depth": [3, None],
-              "max_features": randint(1, featuresSize),
-              "min_samples_split": randint(2, 9),
-              "min_samples_leaf": randint(1, 9),
-              "criterion": ["gini", "entropy"]}
+    # param_dist = {"max_depth": [3, None],
+    #           "max_features": randint(1, featuresSize),
+    #           "min_samples_split": randint(2, 9),
+    #           "min_samples_leaf": randint(1, 9),
+    #           "criterion": ["gini", "entropy"]}
 
-    forest = RandomForestClassifier(n_estimators = 20)
+    # forest = RandomForestClassifier(n_estimators = 20)
 
     #featuresSize = feature_cols.__len__()
     param_dist = {"max_depth": [3, None],
@@ -242,8 +242,8 @@ def treeClassifier2(c,X,Y):
     
 
     # train a decision tree model on the training set
-    tree = DecisionTreeClassifier(max_depth=3, min_samples_split=8, max_features=6, criterion='entropy', min_samples_leaf=7)
-    tree.fit(X_train, y_train)
+    # tree = DecisionTreeClassifier(max_depth=3, min_samples_split=8, max_features=6, criterion='entropy', min_samples_leaf=7)
+    # tree.fit(X_train, y_train)
 
     # make class predictions for the testing set
    # y_pred_class = tree.predict(X_test)
