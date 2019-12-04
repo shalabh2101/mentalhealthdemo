@@ -42,6 +42,7 @@ def encoding(data):
 data.select_dtypes(include=['object']).columns
 data = encoding(data)
 
+data['title']
 # for i in range(data.shape[0]):
 #     data['title']=i
 for i in range(data.shape[0]):
