@@ -44,6 +44,11 @@ data = encoding(data)
 
 print(type(data))
 
+indices = pd.Series(data.index, index=data['title']).drop_duplicates()
+
+indices = pd.Series(data.index, index=data['title']).drop_duplicates()
+data = data.dropna()
+data = data.dropna()
 
 title = [x+1 for x in range(data.shape[0])]
 
@@ -52,11 +57,7 @@ data['title'] = title
 print(data)
 
 
-indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 
-indices = pd.Series(data.index, index=data['title']).drop_duplicates()
-data = data.dropna()
-data = data.dropna()
 
 maindata=data[['Folk','Classical music','Pop','Metal or Hardrock','Opera','Documentary','Horror','Thriller','Romantic','Sci-fi',
            'History','Science and technology','Writing','Dancing','Foreign languages','Religion','Countryside, outdoors','Pets','Cars',
@@ -80,15 +81,16 @@ cosine_sim = linear_kernel(feature_vactor, feature_vactor)
 cosine_sim2 = cosine_similarity(feature_vactor, feature_vactor)
 
 def get_recommendations(title, cosine_sim):
-    idx = indices[title]
+    idx = indices.iloc[title]
+    # idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:11]
     movie_indices = [i[0] for i in sim_scores]
     return data['title'].iloc[movie_indices]
 
-data = data.reset_index()
-indices = pd.Series(data.index, index=data['title'])
+# data = data.reset_index()
+# indices = pd.Series(data.index, index=data['title'])
 
 import json
 @app.route('/', methods=['GET','POST'])
@@ -111,6 +113,7 @@ def index():
             temp_dict = {}
             temp_dict['index'] = index+1
             temp_dict['id'] = i
+            print(moviesmusic)
             temp_dict['moviesmusic'] = moviesmusic[i].sort(reverse = True)[:3]
             temp_dict['hobbiesinterest'] = hobbiesinterest[i].sort(reverse = True)[:3]
             temp_dict['traits'] = traits[i].sort(reverse = True)[:3]
@@ -342,6 +345,4 @@ def index2():
         return "not expected input"
 
 if __name__== "__main__" :
-   app.run(host='0.0.0.0',port=80,debug=True)
-                           
-
+   app.run(host='127.0.0.1',debug=True)
