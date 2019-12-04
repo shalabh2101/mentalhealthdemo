@@ -242,7 +242,7 @@ def index2():
         res_treatment = treeClassifier(test_data,X1,y1,8)
 
         test_data_2=[resp['1'],resp['2'],resp['9'],resp['10'],resp['11'],resp['12'],resp['13'],resp['14'],resp['15'],resp['16']]
-        res_consequence = treeClassifier(test_data,X2,y2,10)
+        res_consequence = treeClassifier(test_data_2,X2,y2,10)
 
         print(res_treatment)
         print(res_consequence)
