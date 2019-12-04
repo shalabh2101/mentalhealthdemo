@@ -202,10 +202,10 @@ def treeClassifier(c,X,Y,length):
    # y_pred_class = tree.predict(X_test)
 
 
-    c=np.array(c).reshape(-1, length)
+    c1=np.array(c).reshape(-1, length)
 
     #y_pred_class = tree.predict(c)
-    y_pred_class = my_forest.predict(c)
+    y_pred_class = my_forest.predict(c1)
     #print('y_pred_class')
     return (y_pred_class)
 
