@@ -42,8 +42,8 @@ def encoding(data):
 data.select_dtypes(include=['object']).columns
 data = encoding(data)
 
-for i in range(data.shape[0]):
-    data['title']=i
+# for i in range(data.shape[0]):
+#     data['title']=i
 for i in range(data.shape[0]):
     data['title'][i]=str(i)
     #+random.choice(string.ascii_letters)
