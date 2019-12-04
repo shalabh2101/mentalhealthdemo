@@ -51,7 +51,6 @@ data['title'] = title
 
 indices = pd.Series(data.index, index=data['title'])
 
-# indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 data = data.dropna()
 
 
@@ -83,45 +82,68 @@ cosine_sim2 = cosine_similarity(feature_vactor, feature_vactor)
 
 def get_recommendations(title, cosine_sim):
     idx = indices.iloc[title]
-    # idx = indices[title]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:11]
     movie_indices = [i[0] for i in sim_scores]
     return data['title'].iloc[movie_indices]
 
-# data = data.reset_index()
-# indices = pd.Series(data.index, index=data['title'])
 
 import json
 @app.route('/', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
-        resp = request.json
-        # csv_update(resp)
-        res_list = []
-        res = get_recommendations(resp['name'], cosine_sim2)
-        res = res.to_list()[:3]
-        for index, i in enumerate(res):
-            temp_list = []
-            # moviesmusic[i].sort(reverse = True)[:3]
+        try:
+            resp = request.json
+            res_list = []
+            res = get_recommendations(resp['name'], cosine_sim2)
+            res = res.to_list()[:3]
 
-           
-            # for j in data.columns:
-            #     if data[j][i] == 5:
-            #         temp_list.append(j)
-                   
-            temp_dict = {}
-            temp_dict['index'] = index+1
-            temp_dict['id'] = i
-            print(moviesmusic)
-            temp_dict['moviesmusic'] = moviesmusic[i].sort(reverse = True)[:3]
-            temp_dict['hobbiesinterest'] = hobbiesinterest[i].sort(reverse = True)[:3]
-            temp_dict['traits'] = traits[i].sort(reverse = True)[:3]
-            res_list.append(temp_dict)
-        return jsonify({
-            "result": res_list
-        })
+            for i in res:
+                temp_dict = {}
+                temp_dict['id'] = i
+                
+                moviesmusic_row = moviesmusic.iloc[i].to_dict()
+                temp1 = sorted(moviesmusic_row, key=moviesmusic_row.get)[-3:]
+                temp_dict['moviesmusic'] = temp1
+
+                hobbiesinterest_row = hobbiesinterest.iloc[i].to_dict()
+                temp2 = sorted(hobbiesinterest_row, key=hobbiesinterest_row.get)[-3:]
+                temp_dict['hobbiesinterest'] = temp2
+
+                traits_row = traits.iloc[i].to_dict()
+                temp3 = sorted(traits_row, key=traits_row.get)[-3:]
+                temp_dict['traits'] = temp3
+
+                
+
+                
+                res_list.append(temp_dict)
+            
+            temp6 = {}  
+
+            user_row = moviesmusic.iloc[resp['name']].to_dict()
+            temp3 = sorted(user_row, key=user_row.get)[-3:]
+            temp6['moviesmusic'] = temp3
+
+            hobbies_row = moviesmusic.iloc[resp['name']].to_dict()
+            temp4 = sorted(hobbies_row, key=hobbies_row.get)[-3:]
+            temp6['hobbiesinterest'] = temp4
+
+            t_row = moviesmusic.iloc[resp['name']].to_dict()
+            temp5 = sorted(t_row, key=t_row.get)[-3:]
+            temp6['traits'] = temp5
+            
+            res_list.append(temp6)
+
+            return jsonify({
+                "result": res_list
+            })
+            
+        except:
+            return jsonify({
+                "result": "Data Frame is Null. Try with another value."
+            })
     else:
         return "get method!!!"
 
@@ -346,4 +368,4 @@ def index2():
         return "not expected input"
 
 if __name__== "__main__" :
-   app.run(host='0.0.0.0',debug=True)
+   app.run(host='127.0.0.1',debug=True)
