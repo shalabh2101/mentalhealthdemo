@@ -46,7 +46,7 @@ data['title']=[]
 # for i in range(data.shape[0]):
 #     data['title']=i
 for i in range(data.shape[0]):
-    data['title'][i]=str(i)
+    data['title']=i
     #+random.choice(string.ascii_letters)
 
 indices = pd.Series(data.index, index=data['title']).drop_duplicates()
