@@ -163,7 +163,7 @@ y2 = train_df['Do you think that discussing a mental health disorder with your e
 #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
 
 
-def treeClassifier(c,X,Y,len):
+def treeClassifier(c,X,Y,length):
     # Calculating the best parameters
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.30, random_state=0)
 
@@ -202,7 +202,7 @@ def treeClassifier(c,X,Y,len):
    # y_pred_class = tree.predict(X_test)
 
 
-    c=np.array(c).reshape(-1, len)
+    c=np.array(c).reshape(-1, length)
 
     #y_pred_class = tree.predict(c)
     y_pred_class = my_forest.predict(c)
