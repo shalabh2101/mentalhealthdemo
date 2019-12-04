@@ -44,17 +44,18 @@ data = encoding(data)
 
 print(type(data))
 
-indices = pd.Series(data.index, index=data['title']).drop_duplicates()
-
-indices = pd.Series(data.index, index=data['title']).drop_duplicates()
-data = data.dropna()
-data = data.dropna()
 
 title = [x+1 for x in range(data.shape[0])]
 
 data['title'] = title
 
-print(data)
+indices = pd.Series(data.index, index=data['title'])
+
+# indices = pd.Series(data.index, index=data['title']).drop_duplicates()
+data = data.dropna()
+
+
+
 
 
 
