@@ -170,7 +170,7 @@ def treeClassifier(c,X,Y,length):
 
 
     tree = DecisionTreeClassifier()
-    featuresSize = feature_cols.__len__()
+    featuresSize = length
     param_dist = {"max_depth": [3, None],
               "max_features": randint(1, featuresSize),
               "min_samples_split": randint(2, 9),
