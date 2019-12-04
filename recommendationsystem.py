@@ -42,12 +42,15 @@ def encoding(data):
 data.select_dtypes(include=['object']).columns
 data = encoding(data)
 
-data['title']=[]
-# for i in range(data.shape[0]):
-#     data['title']=i
-for i in range(data.shape[0]):
-    data['title']=i
-    #+random.choice(string.ascii_letters)
+print(type(data))
+
+
+title = [x+1 for x in range(data.shape[0])]
+
+data['title'] = title
+
+print(data)
+
 
 indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 
