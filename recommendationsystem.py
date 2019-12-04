@@ -53,7 +53,22 @@ indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 indices = pd.Series(data.index, index=data['title']).drop_duplicates()
 data = data.dropna()
 data = data.dropna()
-feature_vactor=data[['Music','Dance','Musical','Pop']]
+
+maindata=data[['Folk','Classical music','Pop','Metal or Hardrock','Opera','Documentary','Horror','Thriller','Romantic','Sci-fi',
+           'History','Science and technology','Writing','Dancing','Foreign languages','Religion','Countryside, outdoors','Pets','Cars',
+         'Prioritising workload','Writing notes','Fear of public speaking', 'Funniness','Getting angry','Charity','Assertiveness','Loneliness','Appearence and gestures' ]]
+
+moviesmusic=data[['Folk','Classical music','Pop','Metal or Hardrock','Opera','Documentary','Horror','Thriller','Romantic',
+                     'Sci-fi']]
+    
+hobbiesinterest=data[['History','Politics','Science and technology','Writing','Dancing','Foreign languages','Religion',
+                        'Countryside, outdoors','Pets','Cars']]
+    
+traits=data[['Prioritising workload','Writing notes','Fear of public speaking','Funniness','Mood swings','Getting angry','Charity','Assertiveness','Loneliness'
+               'Appearence and gestures' ]]
+
+
+feature_vactor=maindata
 f=data[['title','Music','Dance','Musical','Pop']]
 
 
@@ -82,13 +97,19 @@ def index():
         res = res.to_list()[:3]
         for index, i in enumerate(res):
             temp_list = []
-            for j in data.columns:
-                if data[j][i] == 5:
-                    temp_list.append(j)
+            # moviesmusic[i].sort(reverse = True)[:3]
+
+           
+            # for j in data.columns:
+            #     if data[j][i] == 5:
+            #         temp_list.append(j)
+                   
             temp_dict = {}
             temp_dict['index'] = index+1
             temp_dict['id'] = i
-            temp_dict['features'] = temp_list
+            temp_dict['moviesmusic'] = moviesmusic[i].sort(reverse = True)[:3]
+            temp_dict['hobbiesinterest'] = hobbiesinterest[i].sort(reverse = True)[:3]
+            temp_dict['traits'] = traits[i].sort(reverse = True)[:3]
             res_list.append(temp_dict)
         return jsonify({
             "result": res_list
